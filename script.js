@@ -76,19 +76,34 @@ document.querySelectorAll('.plan-card,.svc-card,.meal-card,.feat-item,.why-item,
 // ─────────────────────────────────────────────────────────────────
 async function submitEnquiry(e) {
   e.preventDefault();
-  const form    = e.target;
-  const btn     = form.querySelector('button[type="submit"]');
+  const form = e.target;
+  const btn  = form.querySelector('button[type="submit"]');
   const success = document.getElementById('formSuccess');
-  const data    = new FormData(form);
+  const data = new FormData(form);
 
   const name    = data.get('name')    || '';
   const phone   = data.get('phone')   || '';
+  const email   = data.get('email')   || '';
   const goal    = data.get('goal')    || '';
   const plan    = data.get('plan')    || 'Not selected';
   const message = data.get('message') || '';
 
   btn.textContent = 'Sending...';
   btn.disabled    = true;
+
+  // Send directly to Make.com webhook
+  await fetch('https://hook.eu1.make.com/o6988dyvk2podvyskqlawy0zqptok6s1', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, phone, email, goal, plan, message })
+  });
+
+  success.style.display = 'block';
+  success.textContent   = '✅ Enquiry sent! We will contact you within 24 hours.';
+  form.reset();
+  btn.textContent = 'Send Enquiry →';
+  btn.disabled    = false;
+}
 
   // Attempt Formspree if ID is configured
   if (FORMSPREE_ID !== 'YOUR_FORMSPREE_ID') {
