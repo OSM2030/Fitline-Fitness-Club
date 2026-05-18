@@ -1,0 +1,183 @@
+============================================================
+  FITLINE FITNESS CLUB — WEBSITE PROJECT NOTES
+  For: Shubham Borude | FitLine Fitness Club, Shevgaon
+  Built by: [Your Name/Studio]
+============================================================
+
+FILES INCLUDED
+--------------
+index.html   — Main website (all sections)
+style.css    — All styling (dark/orange gym theme)
+script.js    — Interactivity (tabs, scroll, form, nav)
+
+HOSTING ON GITHUB PAGES (FREE)
+-------------------------------
+1. Create a free GitHub account → github.com
+2. Create a new repository → Name it: fitline-fitness (or any name)
+3. Upload all 3 files (index.html, style.css, script.js)
+4. Go to Settings → Pages → Source: Deploy from branch → main / root
+5. Live URL will be: https://yourgithubusername.github.io/fitline-fitness
+6. Share this link with the gym owner
+
+WHAT'S ON THE WEBSITE
+----------------------
+✅ Hero Section — Branding, tagline, stats, CTA buttons
+✅ Ticker — Animated scrolling service highlights
+✅ About Section — Gym description + 4 service cards + Why Choose Us
+✅ Membership Plans — 3 months / 6 months / 1 year with prices (₹3999 / ₹5999 / ₹8999)
+✅ Diet Plans — Tabbed section with full 7-meal Weight Gain + Fat Loss plans
+✅ Services Section — 6 key services listed
+✅ Trainer Section — Shubham Borude profile + contact
+✅ Enquiry Form — Auto-sends to WhatsApp with member details
+✅ Footer — All contact info, links, social buttons
+✅ Fully Mobile Responsive
+
+ENQUIRY FORM BEHAVIOUR
+-----------------------
+When someone fills the form and clicks "Send Enquiry":
+→ A WhatsApp message is auto-composed with their details
+→ Opens wa.me/919665197143 in new tab with pre-filled message
+→ Shubham receives lead directly on WhatsApp — NO backend needed!
+
+TO CHANGE CONTENT (VS CODE MAC)
+---------------------------------
+- All text is in index.html — use Cmd+F to search and replace
+- Prices are in class="plan-price" inside #plans section
+- Diet plan meals are inside #diet-weightgain and #diet-fatloss sections
+- Phone number appears multiple times — search "9665197143" to update all
+- Address: search "Shree Complex"
+- Instagram: search "limitless_shubham_borude"
+- Colors: open style.css, edit :root variables at the top
+  - --orange: #F5A623  ← main accent color
+  - --black: #0A0A0A   ← background
+
+============================================================
+  PREMIUM UPGRADE PITCH — HOW TO CHARGE
+============================================================
+
+STEP 1: PITCH THE FREE WEBSITE FIRST
+--------------------------------------
+Show him the live GitHub Pages link. Let him see his name,
+branding, plans, and diet plans live on a real website.
+This builds trust and excitement before you ask for money.
+
+Say: "This is your live website — zero cost, live right now.
+If you want to take it to the next level, I have a premium package."
+
+STEP 2: PREMIUM PACKAGE — WHAT TO OFFER
+-----------------------------------------
+
+TIER 1 — STARTER PRO (One-time ₹2,999)
+  ✦ Custom domain: fitlinefitness.in or fitlineshevgaon.com
+    (Domain cost ~₹700–900/yr, you charge ₹2,999 setup + first year)
+  ✦ Professional hosting (Vercel or Netlify — still free for you!)
+  ✦ WhatsApp enquiry form (already done, include as value)
+  ✦ QR Codes (set of 4, printed design — see QR plan below)
+  ✦ 1 design update per month
+
+TIER 2 — GROWTH PLAN (Monthly ₹999/month)
+  ✦ Everything in Starter Pro
+  ✦ WhatsApp notification system (new enquiry → instant WhatsApp ping)
+    → Use n8n.io (free) or Make.com to route form → WhatsApp Business API
+  ✦ Monthly diet plan update on website
+  ✦ Instagram feed auto-display on website
+  ✦ Google Analytics — track visitors, clicks, enquiries
+  ✦ Member QR login (separate members page, password protected)
+  ✦ Monthly website traffic report sent to Shubham
+
+TIER 3 — FULL DIGITAL (Monthly ₹2,499/month)
+  ✦ Everything above
+  ✦ Member portal with login (each member sees their own diet plan)
+  ✦ WhatsApp broadcast for promotions (send offers to all members)
+  ✦ Online payment collection for memberships (Razorpay integration)
+  ✦ Attendance/check-in QR system
+  ✦ Birthday/renewal reminder automation
+  ✦ Google My Business management
+
+HOW TO COLLECT PAYMENT
+------------------------
+Option A — UPI/GPay/PhonePe directly (simplest)
+Option B — Razorpay payment link (professional)
+  → Create at razorpay.com → Paste link as "Pay Now" button
+Option C — Monthly auto-debit via Razorpay subscription
+
+QR CODE PLAN (4 QR CODES TO CREATE)
+--------------------------------------
+Create QR codes FREE at: qr-code-generator.com or canva.com
+
+QR 1 — MAIN WEBSITE QR
+  URL: https://yourgithubusername.github.io/fitline-fitness
+  Label: "Scan to visit FitLine website"
+  Use on: Posters, visiting cards, front door
+
+QR 2 — DIRECT ENQUIRY QR
+  URL: https://wa.me/919665197143?text=Hi%20FitLine!%20I%20want%20to%20join%20the%20gym.
+  Label: "Scan to Enquire on WhatsApp"
+  Use on: Banners, flex boards, reception
+
+QR 3 — WEIGHT GAIN DIET PLAN QR (Members Only)
+  URL: https://yourgithubusername.github.io/fitline-fitness/#diet
+  (On landing, auto-open weight gain tab — add ?tab=weightgain param if needed)
+  Label: "Weight Gain Diet Plan — FitLine Members"
+  Use on: Print card given to weight gain plan members
+
+QR 4 — FAT LOSS DIET PLAN QR (Members Only)
+  URL: https://yourgithubusername.github.io/fitline-fitness/#diet
+  Label: "Fat Loss Diet Plan — FitLine Members"
+  Use on: Print card given to fat loss plan members
+
+FOR QR 3 & 4: Add ?goal=weightgain or ?goal=fatloss to URL.
+Then in script.js, read URL param and auto-switch tab:
+  const params = new URLSearchParams(window.location.search);
+  const goal = params.get('goal');
+  if (goal) { document.querySelector(`[data-tab="${goal}"]`)?.click(); }
+
+NOTIFICATION ALERTS BACKEND (How it works)
+--------------------------------------------
+When someone submits the enquiry form on the website:
+1. Form data goes to a free service like Formspree.io or Getform.io
+2. That service can send an email OR trigger a webhook
+3. Webhook → n8n (free, self-hosted) or Make.com (free tier)
+4. n8n/Make sends WhatsApp message to Shubham instantly
+
+FREE TOOLS NEEDED:
+- Formspree.io — form backend (free: 50 submissions/month)
+- Make.com — automation (free: 1000 ops/month)
+- WhatsApp Business app — to receive notifications
+
+HOW TO ADD FORMSPREE TO THE FORM:
+1. Sign up at formspree.io
+2. Create a new form → get your form ID e.g. "xpzgabcd"
+3. In index.html, change:
+   <form ... onsubmit="submitEnquiry(event)">
+   to:
+   <form action="https://formspree.io/f/xpzgabcd" method="POST">
+   Remove onsubmit, add <input type="hidden" name="_next" value="thankyou.html">
+
+DOMAIN SETUP (when ready to upgrade)
+--------------------------------------
+Buy domain at: GoDaddy, Namecheap, or Hostinger India
+Recommended: .in domain (~₹699/year) or .com (~₹900/year)
+Suggested: fitlineshevgaon.com / fitlinefitness.in
+
+After buying:
+1. Deploy on Vercel (vercel.com) — free, 1-click GitHub deploy
+2. Add custom domain in Vercel settings → DNS records auto-configured
+3. SSL (https) is free and automatic on Vercel
+
+PITCH SCRIPT (Short)
+----------------------
+"Shubham bhai, your gym website is live right now — I'll share the link.
+People can see your plans, diet charts, and enquire directly on WhatsApp.
+If you want your own domain like fitlineshevgaon.com, WhatsApp alerts for
+every new enquiry, and your members to get their diet plans via QR — 
+I have a package starting at just ₹2,999 one-time. Monthly growth plan
+is ₹999 only. Let's talk."
+
+============================================================
+  QUESTIONS? CHANGES? CONTACT THE DEV
+============================================================
+All content is easily editable in VS Code.
+Use Cmd+F (Mac) to find and replace any text.
+Open style.css → :root to change colors instantly.
+============================================================
