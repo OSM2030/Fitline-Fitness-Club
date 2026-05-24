@@ -101,7 +101,7 @@ async function submitEnquiry(event){
   try{
 
     const response = await fetch(
-      "https://script.google.com/macros/library/d/1B2GdKnpR21pnDLqzl0VHZ6N5HyrmTvTCBEwEPHYS6xCtJ2qoXv6r1Om5/2",
+      "https://script.google.com/macros/s/AKfycbyFMiacstfY40ZQN-FPfLX1KQRhp1K0O_VXnvYN_tWHHRuxSe2xQPEAv3YcWFRYFpcS/exec",
       {
         method: "POST",
         headers: {
