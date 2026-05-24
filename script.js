@@ -98,39 +98,38 @@ async function submitEnquiry(event){
     message: form.message.value
   };
 
-  try{
+ try {
 
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbyFMiacstfY40ZQN-FPfLX1KQRhp1K0O_VXnvYN_tWHHRuxSe2xQPEAv3YcWFRYFpcS/exec",
-      {
-        method: "POST",
-        headers: {
-  "Content-Type": "text/plain;charset=utf-8"
-},
-        body: JSON.stringify(data)
-      }
-    );
+  const response = await fetch(
+    "https://script.google.com/macros/s/AKfycbyFMiacstfY40ZQN-FPfLX1KQRhp1K0O_VXnvYN_tWHHRuxSe2xQPEAv3YcWFRYFpcS/exec",
+    {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain"
+      },
+      body: JSON.stringify(data)
+    }
+  );
 
-    const result = await response.json();
+  success.style.display = "block";
 
-    success.style.display = "block";
+  success.innerHTML =
+    "✅ Enquiry submitted successfully! Check your email 💪";
 
-    success.innerHTML =
-      "✅ Enquiry submitted successfully! Check your email 💪";
+  form.reset();
 
-    form.reset();
+}
+catch(error){
 
-  }
-  catch(error){
+  console.log(error);
 
-    console.log(error);
+  success.style.display = "block";
 
-    success.style.display = "block";
+  success.innerHTML =
+    "❌ Something went wrong. Please try again.";
 
-    success.innerHTML =
-      "❌ Something went wrong. Please try again.";
-
-  }
+}
 
   btn.disabled = false;
 
