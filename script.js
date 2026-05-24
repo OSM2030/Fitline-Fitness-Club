@@ -74,68 +74,67 @@ document.querySelectorAll('.plan-card,.svc-card,.meal-card,.feat-item,.why-item,
 //      Formspree can also trigger Make.com → writes to Google Sheet
 //   2. Fallback: open WhatsApp with pre-filled message (no backend needed)
 // ─────────────────────────────────────────────────────────────────
-async function submitEnquiry(e) {
-  e.preventDefault();
-  const form = e.target;
-  const btn  = form.querySelector('button[type="submit"]');
+// ── ENQUIRY FORM ─────────────────────────────
+
+async function submitEnquiry(event){
+
+  event.preventDefault();
+
+  const form = event.target;
+
+  const btn = form.querySelector('button[type="submit"]');
+
   const success = document.getElementById('formSuccess');
-  const data = new FormData(form);
 
-  const name    = data.get('name')    || '';
-  const phone   = data.get('phone')   || '';
-  const email   = data.get('email')   || '';
-  const goal    = data.get('goal')    || '';
-  const plan    = data.get('plan')    || 'Not selected';
-  const message = data.get('message') || '';
+  btn.disabled = true;
+  btn.textContent = "Sending...";
 
-  btn.textContent = 'Sending...';
-  btn.disabled    = true;
+  const data = {
+    name: form.name.value,
+    phone: form.phone.value,
+    email: form.email.value,
+    goal: form.goal.value,
+    plan: form.plan.value,
+    message: form.message.value
+  };
 
-  // Send directly to Make.com webhook
-  await fetch('https://hook.eu1.make.com/o6988dyvk2podvyskqlawy0zqptok6s1', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, phone, email, goal, plan, message })
-  });
+  try{
 
-  success.style.display = 'block';
-  success.textContent   = '✅ Enquiry sent! We will contact you within 24 hours.';
-  form.reset();
-  btn.textContent = 'Send Enquiry →';
-  btn.disabled    = false;
-}
-
-  // Attempt Formspree if ID is configured
-  if (FORMSPREE_ID !== 'YOUR_FORMSPREE_ID') {
-    try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method:  'POST',
-        headers: { Accept: 'application/json' },
-        body:    data,
-      });
-      if (res.ok) {
-        success.style.display = 'block';
-        success.textContent   = '✅ Enquiry sent! Shubham will contact you within 24 hours. You can also call 9665197143 directly.';
-        form.reset();
-        btn.textContent = 'Send via WhatsApp →';
-        btn.disabled    = false;
-        return;
+    const response = await fetch(
+      "https://script.google.com/macros/library/d/1B2GdKnpR21pnDLqzl0VHZ6N5HyrmTvTCBEwEPHYS6xCtJ2qoXv6r1Om5/2",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       }
-    } catch (err) {
-      console.warn('Formspree unavailable, falling back to WhatsApp');
-    }
+    );
+
+    const result = await response.json();
+
+    success.style.display = "block";
+
+    success.innerHTML =
+      "✅ Enquiry submitted successfully! Check your email 💪";
+
+    form.reset();
+
+  }
+  catch(error){
+
+    console.log(error);
+
+    success.style.display = "block";
+
+    success.innerHTML =
+      "❌ Something went wrong. Please try again.";
+
   }
 
-  // WhatsApp fallback (always works, no setup required)
-  const text = encodeURIComponent(
-    `Hi FitLine Fitness Club! Membership enquiry:\n\nName: ${name}\nPhone: ${phone}\nGoal: ${goal}\nPlan: ${plan}\nMessage: ${message || 'None'}`
-  );
-  success.style.display = 'block';
-  success.textContent   = '✅ Opening WhatsApp. You can also call us directly: 9665197143';
-  form.reset();
-  btn.textContent = 'Send via WhatsApp →';
-  btn.disabled    = false;
-  setTimeout(() => window.open(`https://wa.me/${WA_NUMBER}?text=${text}`, '_blank'), 600);
+  btn.disabled = false;
+
+  btn.textContent = "Send Enquiry →";
 }
 
 /*
