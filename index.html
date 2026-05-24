@@ -309,71 +309,255 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="section bg-alt" id="contact">
-    <div class="container">
-      <div class="sec-header">
-        <div class="eyebrow">Get In Touch</div>
-        <h2 class="section-heading tc">Enquire Now</h2>
-        <p class="sec-sub">Fill in your details — we'll reach you within 24 hours.</p>
-      </div>
-      <div class="contact-grid">
-        <form class="enq-form" onsubmit="submitEnquiry(event)">
-          <div class="form-row">
-            <div class="ff"><label>Full Name *</label><input type="text" name="name" placeholder="Your name" required /></div>
-            <div class="ff"><label>Phone *</label><input type="tel" name="phone" placeholder="10-digit number" required /></div>
-          </div>
-          <div class="ff">
-          <label>Email (Optional)</label>
-            <input type="email" name="email" 
-            placeholder="your@email.com" />
-          </div>
-          <div class="form-row">
-            <div class="ff">
-              <label>Your Goal *</label>
-              <select name="goal" required>
-                <option value="">Select your goal</option>
-                <option>Weight Gain / Muscle Building</option>
-                <option>Fat Loss / Weight Loss</option>
-                <option>General Fitness</option>
-                <option>Strength Training</option>
-                <option>Cardio &amp; Stamina</option>
-              </select>
-            </div>
-            <div class="ff">
-              <label>Preferred Plan</label>
-              <select name="plan">
-                <option value="">Select a plan</option>
-                <option>3 Months — ₹3,999</option>
-                <option>6 Months — ₹5,999</option>
-                <option>1 Year — ₹8,999</option>
-              </select>
-            </div>
-          </div>
-          <div class="ff full">
-            <label>Message (Optional)</label>
-            <textarea name="message" rows="4" placeholder="Any questions or requirements?"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-full"> Send Enquiry →</button>
-          <div id="formSuccess" class="form-ok" style="display:none;">
-            ✅ Opening WhatsApp with your details. You can also call directly: <strong>9665197143</strong>
-          </div>
-        </form>
+ <!-- CONTACT -->
+<section class="section bg-alt" id="contact">
+  <div class="container">
 
-        <div class="contact-side">
-          <div class="cinfo-block">
-            <div class="ci"><span class="ci-lbl">Phone / WhatsApp</span><a href="tel:9665197143" class="ci-val">9665197143</a></div>
-            <div class="ci"><span class="ci-lbl">Address</span><span class="ci-val">Shree Complex, Miri Road, Shevgaon</span></div>
-            <div class="ci"><span class="ci-lbl">Instagram</span><a href="https://instagram.com/limitless_shubham_borude" target="_blank" class="ci-val">@limitless_shubham_borude</a></div>
-            <div class="ci"><span class="ci-lbl">Timing</span><span class="ci-val">Mon–Sat: 5:30 AM – 10:00 PM<br/>Sunday: 7:00 AM – 12:00 PM</span></div>
-          </div>
-          <a href="https://wa.me/919665197143?text=Hi%20FitLine!%20I%20want%20to%20enquire%20about%20membership." target="_blank" class="btn btn-primary btn-full" style="margin-top:1.5rem;">💬 Chat on WhatsApp</a>
-          <a href="https://maps.google.com/?q=Shree+Complex+Miri+Road+Shevgaon" target="_blank" class="btn btn-ghost btn-full" style="margin-top:0.75rem;">📍 Find on Google Maps</a>
-        </div>
-      </div>
+    <div class="sec-header">
+      <div class="eyebrow">Get In Touch</div>
+
+      <h2 class="section-heading tc">
+        Enquire Now
+      </h2>
+
+      <p class="sec-sub">
+        Fill in your details — we'll reach you within 24 hours.
+      </p>
     </div>
-  </section>
 
+    <div class="contact-grid">
+
+      <!-- FORM -->
+
+      <form
+        class="enq-form"
+        action="https://script.google.com/macros/s/AKfycbyFMiacstfY40ZQN-FPfLX1KQRhp1K0O_VXnvYN_tWHHRuxSe2xQPEAv3YcWFRYFpcS/exec"
+        method="POST"
+        target="hidden_iframe"
+        onsubmit="showSuccess()"
+      >
+
+        <div class="form-row">
+
+          <div class="ff">
+            <label>Full Name *</label>
+
+            <input
+              type="text"
+              name="name"
+              placeholder="Your name"
+              required
+            />
+          </div>
+
+          <div class="ff">
+            <label>Phone *</label>
+
+            <input
+              type="tel"
+              name="phone"
+              placeholder="10-digit number"
+              required
+            />
+          </div>
+
+        </div>
+
+        <div class="ff">
+
+          <label>Email *</label>
+
+          <input
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            required
+          />
+
+        </div>
+
+        <div class="form-row">
+
+          <div class="ff">
+
+            <label>Your Goal *</label>
+
+            <select name="goal" required>
+
+              <option value="">
+                Select your goal
+              </option>
+
+              <option>
+                Weight Gain / Muscle Building
+              </option>
+
+              <option>
+                Fat Loss / Weight Loss
+              </option>
+
+              <option>
+                General Fitness
+              </option>
+
+              <option>
+                Strength Training
+              </option>
+
+              <option>
+                Cardio & Stamina
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="ff">
+
+            <label>Preferred Plan</label>
+
+            <select name="plan">
+
+              <option value="">
+                Select a plan
+              </option>
+
+              <option>
+                3 Months — ₹3,999
+              </option>
+
+              <option>
+                6 Months — ₹5,999
+              </option>
+
+              <option>
+                1 Year — ₹8,999
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+        <div class="ff full">
+
+          <label>Message (Optional)</label>
+
+          <textarea
+            name="message"
+            rows="4"
+            placeholder="Any questions or requirements?"
+          ></textarea>
+
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-full"
+        >
+          Send Enquiry →
+        </button>
+
+        <div
+          id="formSuccess"
+          class="form-ok"
+          style="display:none;color:#22c55e;margin-top:1rem;"
+        >
+          ✅ Enquiry submitted successfully! Check your email 💪
+        </div>
+
+      </form>
+
+      <!-- HIDDEN IFRAME -->
+
+      <iframe
+        name="hidden_iframe"
+        style="display:none;"
+      ></iframe>
+
+      <!-- SIDE INFO -->
+
+      <div class="contact-side">
+
+        <div class="cinfo-block">
+
+          <div class="ci">
+            <span class="ci-lbl">
+              Phone / WhatsApp
+            </span>
+
+            <a
+              href="tel:9665197143"
+              class="ci-val"
+            >
+              9665197143
+            </a>
+          </div>
+
+          <div class="ci">
+            <span class="ci-lbl">
+              Address
+            </span>
+
+            <span class="ci-val">
+              Shree Complex, Miri Road,
+              Shevgaon
+            </span>
+          </div>
+
+          <div class="ci">
+            <span class="ci-lbl">
+              Instagram
+            </span>
+
+            <a
+              href="https://instagram.com/limitless_shubham_borude"
+              target="_blank"
+              class="ci-val"
+            >
+              @limitless_shubham_borude
+            </a>
+          </div>
+
+          <div class="ci">
+            <span class="ci-lbl">
+              Timing
+            </span>
+
+            <span class="ci-val">
+              Mon–Sat: 5:30 AM – 10:00 PM
+              <br>
+              Sunday: 7:00 AM – 12:00 PM
+            </span>
+          </div>
+
+        </div>
+
+        <a
+          href="https://wa.me/919665197143?text=Hi%20FitLine!%20I%20want%20to%20enquire%20about%20membership."
+          target="_blank"
+          class="btn btn-primary btn-full"
+          style="margin-top:1.5rem;"
+        >
+          💬 Chat on WhatsApp
+        </a>
+
+        <a
+          href="https://maps.google.com/?q=Shree+Complex+Miri+Road+Shevgaon"
+          target="_blank"
+          class="btn btn-ghost btn-full"
+          style="margin-top:0.75rem;"
+        >
+          📍 Find on Google Maps
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">

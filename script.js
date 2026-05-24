@@ -76,42 +76,12 @@ document.querySelectorAll('.plan-card,.svc-card,.meal-card,.feat-item,.why-item,
 // ─────────────────────────────────────────────────────────────────
 // ── ENQUIRY FORM ─────────────────────────────
 
-async function submitEnquiry(event){
+function showSuccess(){
 
-  event.preventDefault();
+  setTimeout(() => {
 
-  const form = event.target;
-
-  const success = document.getElementById("formSuccess");
-
-  const btn = form.querySelector("button[type='submit']");
-
-  btn.disabled = true;
-
-  btn.innerHTML = "Sending...";
-
-  const data = {
-    name: form.name.value,
-    phone: form.phone.value,
-    email: form.email.value,
-    goal: form.goal.value,
-    plan: form.plan.value,
-    message: form.message.value
-  };
-
-  try {
-
-    await fetch(
-      "https://script.google.com/macros/s/AKfycbyFMiacstfY40ZQN-FPfLX1KQRhp1K0O_VXnvYN_tWHHRuxSe2xQPEAv3YcWFRYFpcS/exec",
-      {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "text/plain"
-        },
-        body: JSON.stringify(data)
-      }
-    );
+    const success =
+      document.getElementById("formSuccess");
 
     success.style.display = "block";
 
@@ -120,24 +90,12 @@ async function submitEnquiry(event){
 
     success.style.color = "#22c55e";
 
-    form.reset();
+    document
+      .querySelector(".enq-form")
+      .reset();
 
-  }
-  catch(err){
+  }, 1000);
 
-    console.error(err);
-
-    success.style.display = "block";
-
-    success.innerHTML =
-      "❌ Network error. Please try again.";
-
-    success.style.color = "red";
-  }
-
-  btn.disabled = false;
-
-  btn.innerHTML = "Send Enquiry →";
 }
 
 /*
