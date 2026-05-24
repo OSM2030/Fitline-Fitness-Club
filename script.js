@@ -82,12 +82,13 @@ async function submitEnquiry(event){
 
   const form = event.target;
 
-  const btn = form.querySelector('button[type="submit"]');
+  const success = document.getElementById("formSuccess");
 
-  const success = document.getElementById('formSuccess');
+  const btn = form.querySelector("button[type='submit']");
 
   btn.disabled = true;
-  btn.textContent = "Sending...";
+
+  btn.innerHTML = "Sending...";
 
   const data = {
     name: form.name.value,
@@ -98,42 +99,45 @@ async function submitEnquiry(event){
     message: form.message.value
   };
 
- try {
+  try {
 
-  const response = await fetch(
-    "https://script.google.com/macros/s/AKfycbyFMiacstfY40ZQN-FPfLX1KQRhp1K0O_VXnvYN_tWHHRuxSe2xQPEAv3YcWFRYFpcS/exec",
-    {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain"
-      },
-      body: JSON.stringify(data)
-    }
-  );
+    await fetch(
+      "https://script.google.com/macros/s/AKfycbyFMiacstfY40ZQN-FPfLX1KQRhp1K0O_VXnvYN_tWHHRuxSe2xQPEAv3YcWFRYFpcS/exec",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain"
+        },
+        body: JSON.stringify(data)
+      }
+    );
 
-  success.style.display = "block";
+    success.style.display = "block";
 
-  success.innerHTML =
-    "✅ Enquiry submitted successfully! Check your email 💪";
+    success.innerHTML =
+      "✅ Enquiry submitted successfully! Check your email 💪";
 
-  form.reset();
+    success.style.color = "#22c55e";
 
-}
-catch(error){
+    form.reset();
 
-  console.log(error);
+  }
+  catch(err){
 
-  success.style.display = "block";
+    console.error(err);
 
-  success.innerHTML =
-    "❌ Something went wrong. Please try again.";
+    success.style.display = "block";
 
-}
+    success.innerHTML =
+      "❌ Network error. Please try again.";
+
+    success.style.color = "red";
+  }
 
   btn.disabled = false;
 
-  btn.textContent = "Send Enquiry →";
+  btn.innerHTML = "Send Enquiry →";
 }
 
 /*
