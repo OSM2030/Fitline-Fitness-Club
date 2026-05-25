@@ -6,31 +6,56 @@ const FORMSPREE_ID = 'xzdwbyzj';  // from formspree.io after signup
 const WA_NUMBER    = '919665197143';        // keep as-is (country code + number)
 // ────────────────────────────────────────────────────────────────
 
-// ── THEME TOGGLE ──
-const html  = document.documentElement;
-const saved = localStorage.getItem('fl-theme') || 'light';
-html.setAttribute('data-theme', saved);
+// ─────────────────────────────
+// THEME TOGGLE
+// ─────────────────────────────
 
-function applyThemeIcons(theme) {
-  ['iconSun','iconSunM'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = theme === 'light' ? 'block' : 'none';
-  });
-  ['iconMoon','iconMoonM'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = theme === 'dark' ? 'block' : 'none';
-  });
-}
-applyThemeIcons(saved);
+const root = document.documentElement;
 
-function toggleTheme() {
-  const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('fl-theme', next);
-  applyThemeIcons(next);
+const themeBtns = document.querySelectorAll(
+  "#themeToggle, #themeToggleMob"
+);
+
+themeBtns.forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    const currentTheme =
+      root.getAttribute("data-theme");
+
+    const nextTheme =
+      currentTheme === "dark"
+        ? "light"
+        : "dark";
+
+    root.setAttribute(
+      "data-theme",
+      nextTheme
+    );
+
+    // SAVE THEME
+    localStorage.setItem(
+      "fitline-theme",
+      nextTheme
+    );
+
+  });
+
+});
+
+// LOAD SAVED THEME
+
+const savedTheme =
+  localStorage.getItem("fitline-theme");
+
+if(savedTheme){
+
+  root.setAttribute(
+    "data-theme",
+    savedTheme
+  );
+
 }
-document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
-document.getElementById('themeToggleMob')?.addEventListener('click', toggleTheme);
 
 // ── NAVBAR SCROLL ──
 const navbar = document.getElementById('navbar');
