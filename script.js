@@ -179,7 +179,7 @@ function showSuccess() {
   success.style.display = "block";
 
   success.innerHTML =
-    "✅ Membership registered successfully! Check your email 💪";
+    "✅ Enquiry submitted successfully! Our team will contact you soon 💪";
 
   success.style.color = "#22c55e";
 
