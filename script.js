@@ -2,8 +2,9 @@
 // Backend: Formspree + Google Sheets + Make.com (all free)
 
 // ─── CHANGE ONLY THESE TWO LINES ───────────────────────────────
-const FORMSPREE_ID = 'xzdwbyzj';  // from formspree.io after signup
-const WA_NUMBER    = '919665197143';        // keep as-is (country code + number)
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxkptWX67tHfOdRElbOKdOW1FZBYWZBRrX_7qUXSSAQX2QTaCFE_ycYlyBfsGU5_8xqg/exec";
+const WA_NUMBER  = '919665197143';
+// ────────────────────────────────────────────────────────────────
 // ────────────────────────────────────────────────────────────────
 
 // ─────────────────────────────
@@ -137,15 +138,12 @@ if (enquiryForm) {
 
       // FORMSPREE SUBMIT
       const response = await fetch(
-        `https://formspree.io/f/${FORMSPREE_ID}`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Accept: "application/json"
-          }
-        }
-      );
+  SCRIPT_URL,
+  {
+    method: "POST",
+    body: formData
+  }
+);
 
       if (response.ok) {
 
@@ -196,14 +194,7 @@ function showSuccess() {
   STEP-BY-STEP BACKEND SETUP (DO THIS IN ORDER)
 ══════════════════════════════════════════════════════════════
 
-STEP 1 — Formspree (5 min)
-───────────────────────────
-1. Go to formspree.io → Create free account
-2. New Form → name it "FitLine Enquiry"
-3. Copy the Form ID (e.g. xpzgabcd)
-4. Open this file in VS Code
-5. Change line 4:
-     const FORMSPREE_ID = 'xpzgabcd';
+
 6. Push to GitHub → done
 Now every enquiry emails Shubham automatically.
 
