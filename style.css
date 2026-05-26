@@ -87,6 +87,15 @@ img { max-width: 100%; display: block; }
   color: var(--text-1);
   border-color: var(--border);
 }
+button:disabled{
+
+  opacity:0.7;
+
+  cursor:not-allowed;
+
+  transform:none;
+
+}
 .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
 
 .btn-outline-plan {

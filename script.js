@@ -101,25 +101,93 @@ document.querySelectorAll('.plan-card,.svc-card,.meal-card,.feat-item,.why-item,
 // ─────────────────────────────────────────────────────────────────
 // ── ENQUIRY FORM ─────────────────────────────
 
-function showSuccess(){
+const enquiryForm = document.querySelector(".enq-form");
 
-  setTimeout(() => {
+if (enquiryForm) {
 
-    const success =
-      document.getElementById("formSuccess");
+  enquiryForm.addEventListener("submit", async (e) => {
 
-    success.style.display = "block";
+    e.preventDefault();
 
-    success.innerHTML =
-      "✅ Enquiry submitted successfully! Check your email 💪";
+    const submitBtn =
+      enquiryForm.querySelector("button");
 
-    success.style.color = "#22c55e";
+    const formData =
+      new FormData(enquiryForm);
 
-    document
-      .querySelector(".enq-form")
-      .reset();
+    // PHONE VALIDATION
+    const phone =
+      formData.get("phone");
 
-  }, 1000);
+    if (!/^[0-9]{10}$/.test(phone)) {
+
+      alert("Please enter valid 10-digit mobile number");
+
+      return;
+
+    }
+
+    // PREVENT MULTIPLE CLICKS
+    submitBtn.disabled = true;
+
+    submitBtn.innerHTML =
+      "Processing...";
+
+    try {
+
+      // FORMSPREE SUBMIT
+      const response = await fetch(
+        `https://formspree.io/f/${FORMSPREE_ID}`,
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json"
+          }
+        }
+      );
+
+      if (response.ok) {
+
+        showSuccess();
+
+      } else {
+
+        alert("Something went wrong. Please try again.");
+
+      }
+
+    } catch (error) {
+
+      alert("Network error. Please try again.");
+
+    }
+
+    // ENABLE BUTTON AGAIN
+    submitBtn.disabled = false;
+
+    submitBtn.innerHTML =
+      "Activate Membership →";
+
+  });
+
+}
+
+function showSuccess() {
+
+  const success =
+    document.getElementById("formSuccess");
+
+  success.style.display = "block";
+
+  success.innerHTML =
+    "✅ Membership registered successfully! Check your email 💪";
+
+  success.style.color = "#22c55e";
+
+  document
+    .querySelector(".enq-form")
+    .reset();
 
 }
 

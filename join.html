@@ -311,12 +311,14 @@
 
           <label>Phone</label>
 
-          <input
-            type="tel"
-            name="phone"
-            required
-            placeholder="10-digit mobile number"
-          />
+         <input
+  type="tel"
+  name="phone"
+  placeholder="10-digit mobile number"
+  pattern="[0-9]{10}"
+  maxlength="10"
+  required
+/>
 
         </div>
 
@@ -372,7 +374,7 @@
             <option value="">
               Select Plan
             </option>
-            <option value="1 Month — ₹1499">1 Month — ₹1499</option>
+           
             <option>
               3 Months — ₹3,999
             </option>
@@ -426,14 +428,18 @@
 
   </div>
 
-  <script>
-
+ <script>
 
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbxxkptWX67tHfOdRElbOKdOW1FZBYWZBRrX_7qUXSSAQX2QTaCFE_ycYlyBfsGU5_8xqg/exec";
 
 const form =
 document.getElementById("membershipForm");
+
+const submitBtn =
+document.querySelector(
+'button[type="submit"]'
+);
 
 const successMessage =
 document.getElementById("successMessage");
@@ -453,10 +459,35 @@ form.addEventListener(
     errorMessage.style.display =
       "none";
 
+    // Disable button immediately
+    submitBtn.disabled = true;
+
+    submitBtn.innerText =
+      "Processing...";
+
+    const phone =
+      form.phone.value.trim();
+
+    // Phone validation
+    if(!/^[0-9]{10}$/.test(phone)){
+
+      errorMessage.innerText =
+        "❌ Please enter valid 10-digit mobile number.";
+
+      errorMessage.style.display =
+        "block";
+
+      submitBtn.disabled = false;
+
+      submitBtn.innerText =
+        "Activate Membership →";
+
+      return;
+    }
+
     const formData =
       new FormData(form);
 
-    // IMPORTANT
     formData.append(
       "type",
       "member"
@@ -495,6 +526,12 @@ form.addEventListener(
         "block";
 
     }
+
+    // Enable button again
+    submitBtn.disabled = false;
+
+    submitBtn.innerText =
+      "Activate Membership →";
 
   }
 );

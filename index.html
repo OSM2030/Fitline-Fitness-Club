@@ -339,7 +339,6 @@
         action="https://script.google.com/macros/s/AKfycbxxkptWX67tHfOdRElbOKdOW1FZBYWZBRrX_7qUXSSAQX2QTaCFE_ycYlyBfsGU5_8xqg/exec"
         method="POST"
         target="hidden_iframe"
-        onsubmit="showSuccess()"
       >
 
         <div class="form-row">
@@ -361,12 +360,14 @@
 
             <label>Phone Number *</label>
 
-            <input
-              type="tel"
-              name="phone"
-              placeholder="10-digit mobile number"
-              required
-            />
+           <input
+  type="tel"
+  name="phone"
+  placeholder="10-digit mobile number"
+  pattern="[0-9]{10}"
+  maxlength="10"
+  required
+/>
 
           </div>
 
