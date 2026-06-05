@@ -289,104 +289,117 @@
 
   <script>
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxkptWX67tHfOdRElbOKdOW1FZBYWZBRrX_7qUXSSAQX2QTaCFE_ycYlyBfsGU5_8xqg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxxkptWX67tHfOdRElbOKdOW1FZBYWZBRrX_7qUXSSAQX2QTaCFE_ycYlyBfsGU5_8xqg/exec";
 
-    // Plan price mapping
-    const planPrices = {
-      "3 Months — ₹3,999": 3999,
-      "6 Months — ₹5,999": 5999,
-      "12 Months — ₹8,999": 8999
-    };
+const planPrices = {
+  "3 Months — ₹3,999": 3999,
+  "6 Months — ₹5,999": 5999,
+  "12 Months — ₹8,999": 8999
+};
 
-    const planSelect   = document.getElementById("planSelect");
-    const totalFeesEl  = document.getElementById("totalFees");
-    const feesPaidEl   = document.getElementById("feesPaid");
-    const feesSummary  = document.getElementById("feesSummary");
-    const summaryTotal   = document.getElementById("summaryTotal");
-    const summaryPaid    = document.getElementById("summaryPaid");
-    const summaryPending = document.getElementById("summaryPending");
+const planSelect     = document.getElementById("planSelect");
+const totalFeesEl    = document.getElementById("totalFees");
+const feesPaidEl     = document.getElementById("feesPaid");
+const feesSummary    = document.getElementById("feesSummary");
+const summaryTotal   = document.getElementById("summaryTotal");
+const summaryPaid    = document.getElementById("summaryPaid");
+const summaryPending = document.getElementById("summaryPending");
 
-    function updateSummary() {
-      const total = planPrices[planSelect.value] || 0;
-      const paid  = parseInt(feesPaidEl.value) || 0;
-      const pending = Math.max(0, total - paid);
+function updateSummary() {
+  const total   = planPrices[planSelect.value] || 0;
+  const paid    = parseInt(feesPaidEl.value)   || 0;
+  const pending = Math.max(0, total - paid);
 
-      totalFeesEl.value = total || "";
-      summaryTotal.innerText   = "₹" + total.toLocaleString("en-IN");
-      summaryPaid.innerText    = "₹" + paid.toLocaleString("en-IN");
-      summaryPending.innerText = "₹" + pending.toLocaleString("en-IN");
+  totalFeesEl.value        = total || "";
+  summaryTotal.innerText   = "₹" + total.toLocaleString("en-IN");
+  summaryPaid.innerText    = "₹" + paid.toLocaleString("en-IN");
+  summaryPending.innerText = "₹" + pending.toLocaleString("en-IN");
 
-      if (total > 0) {
-        feesSummary.style.display = "block";
-      }
-    }
+  if (total > 0) feesSummary.style.display = "block";
+}
 
-    planSelect.addEventListener("change", updateSummary);
-    feesPaidEl.addEventListener("input", updateSummary);
+planSelect.addEventListener("change", updateSummary);
+feesPaidEl.addEventListener("input",  updateSummary);
 
-    // Form submit
-    const form          = document.getElementById("membershipForm");
-    const submitBtn     = document.querySelector('button[type="submit"]');
-    const successMessage = document.getElementById("successMessage");
-    const errorMessage   = document.getElementById("errorMessage");
+const form           = document.getElementById("membershipForm");
+const submitBtn      = document.querySelector('button[type="submit"]');
+const successMessage = document.getElementById("successMessage");
+const errorMessage   = document.getElementById("errorMessage");
 
-    form.addEventListener("submit", async function(e) {
-      e.preventDefault();
+form.addEventListener("submit", async function(e) {
+  e.preventDefault();
 
-      successMessage.style.display = "none";
-      errorMessage.style.display   = "none";
+  successMessage.style.display = "none";
+  errorMessage.style.display   = "none";
 
-      const phone = form.phone.value.trim();
+  const phone = form.phone.value.trim();
+  if (!/^[0-9]{10}$/.test(phone)) {
+    errorMessage.innerText     = "❌ Please enter valid 10-digit mobile number.";
+    errorMessage.style.display = "block";
+    return;
+  }
 
-      if (!/^[0-9]{10}$/.test(phone)) {
-        errorMessage.innerText = "❌ Please enter valid 10-digit mobile number.";
-        errorMessage.style.display = "block";
-        return;
-      }
+  if (!planSelect.value) {
+    errorMessage.innerText     = "❌ Please select a plan.";
+    errorMessage.style.display = "block";
+    return;
+  }
 
-      const total  = planPrices[planSelect.value] || 0;
-      const paid   = parseInt(feesPaidEl.value) || 0;
+  const total   = planPrices[planSelect.value] || 0;
+  const paid    = parseInt(feesPaidEl.value)   || 0;
+  const pending = Math.max(0, total - paid);
 
-      if (paid > total) {
-        errorMessage.innerText = "❌ Fees paid cannot be more than total fees.";
-        errorMessage.style.display = "block";
-        return;
-      }
+  if (paid > total) {
+    errorMessage.innerText     = "❌ Fees paid cannot be more than total fees.";
+    errorMessage.style.display = "block";
+    return;
+  }
 
-      submitBtn.disabled  = true;
-      submitBtn.innerText = "Processing...";
+  let feesStatus = "Pending";
+  if      (paid >= total) feesStatus = "Paid";
+  else if (paid > 0)      feesStatus = "Partial";
 
-      const formData = new FormData(form);
-      formData.append("type", "member");
-      formData.append("totalFees", total);
-      formData.append("feesPending", total - paid);
+  submitBtn.disabled  = true;
+  submitBtn.innerText = "Processing...";
 
-      // Fees status
-      let feesStatus = "Pending";
-      if (paid >= total)    feesStatus = "Paid";
-      else if (paid > 0)    feesStatus = "Partial";
-      formData.append("feesStatus", feesStatus);
+  // Build URL with all params
+  const url = SCRIPT_URL
+    + "?type=member"
+    + "&name="        + encodeURIComponent(form.name.value.trim())
+    + "&phone="       + encodeURIComponent(phone)
+    + "&email="       + encodeURIComponent(form.email.value.trim())
+    + "&goal="        + encodeURIComponent(form.goal.value)
+    + "&plan="        + encodeURIComponent(planSelect.value)
+    + "&message="     + encodeURIComponent(form.message.value.trim())
+    + "&feesPaid="    + paid
+    + "&totalFees="   + total
+    + "&feesPending=" + pending
+    + "&feesStatus="  + encodeURIComponent(feesStatus);
 
-      try {
-        const response = await fetch(SCRIPT_URL, { method:"POST", body:formData });
+  try {
 
-        if (response.ok) {
-          successMessage.style.display = "block";
-          form.reset();
-          feesSummary.style.display = "none";
-          totalFeesEl.value = "";
-        } else {
-          errorMessage.style.display = "block";
-        }
-      } catch(error) {
-        errorMessage.style.display = "block";
-      }
-
-      submitBtn.disabled  = false;
-      submitBtn.innerText = "Activate Membership →";
+    // Use no-cors mode — Apps Script needs this from external sites
+    await fetch(url, {
+      method: "POST",
+      mode:   "no-cors"
     });
 
-  </script>
+    // no-cors won't return readable response
+    // but if no error thrown, it worked
+    successMessage.style.display = "block";
+    form.reset();
+    feesSummary.style.display    = "none";
+    totalFeesEl.value            = "";
 
+  } catch(err) {
+    errorMessage.innerText     = "❌ Network error. Please check connection.";
+    errorMessage.style.display = "block";
+  }
+
+  submitBtn.disabled  = false;
+  submitBtn.innerText = "Activate Membership →";
+});
+
+</script>
 </body>
 </html>
