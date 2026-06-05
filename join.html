@@ -380,9 +380,9 @@ form.addEventListener("submit", async function(e) {
 
     // Use no-cors mode — Apps Script needs this from external sites
     await fetch(url, {
-      method: "POST",
-      mode:   "no-cors"
-    });
+  method: "GET",
+  mode:   "no-cors"
+});
 
     // no-cors won't return readable response
     // but if no error thrown, it worked
